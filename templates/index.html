@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Security Testing Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🔬 Network Security Testing App</h1>
+            <p class="subtitle">Controlled Environment for Security Research</p>
+        </header>
+
+        <div class="status-panel">
+            <h2>Status Systemu</h2>
+            <div id="status-container">
+                <div class="status-item">
+                    <span class="status-label">Aktywne ataki:</span>
+                    <span id="active-attacks" class="status-value">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <h2>Panel Kontrolny</h2>
+
+            <div class="form-group">
+                <label for="target-ip">Docelowy adres IP:</label>
+                <input type="text" id="target-ip" placeholder="np. 192.168.2.22" value="192.168.2.22">
+            </div>
+
+            <div class="form-group">
+                <label for="port">Port:</label>
+                <input type="number" id="port" placeholder="80" value="80" min="1" max="65535">
+            </div>
+
+            <div class="form-group">
+                <label for="threads">Liczba wątków:</label>
+                <input type="number" id="threads" placeholder="10" value="10" min="1" max="100">
+            </div>
+
+            <div class="attack-types">
+                <h3>Wybierz typ ataku:</h3>
+
+                <div class="attack-card">
+                    <div class="attack-header">
+                        <h4>HTTP Flood (Socket)</h4>
+                        <span class="attack-status" id="status-http_flood">●</span>
+                    </div>
+                    <p>Podstawowy atak HTTP wykorzystujący socket do wysyłania żądań GET</p>
+                    <div class="attack-buttons">
+                        <button class="btn btn-start" onclick="startAttack('http_flood')">Uruchom</button>
+                        <button class="btn btn-stop" onclick="stopAttack('http_flood')">Zatrzymaj</button>
+                    </div>
+                </div>
+
+                <div class="attack-card">
+                    <div class="attack-header">
+                        <h4>HTTP Flood (Scapy)</h4>
+                        <span class="attack-status" id="status-scapy_http">●</span>
+                    </div>
+                    <p>Atak HTTP z wykorzystaniem Scapy do tworzenia niestandardowych pakietów</p>
+                    <div class="attack-buttons">
+                        <button class="btn btn-start" onclick="startAttack('scapy_http')">Uruchom</button>
+                        <button class="btn btn-stop" onclick="stopAttack('scapy_http')">Zatrzymaj</button>
+                    </div>
+                </div>
+
+                <div class="attack-card">
+                    <div class="attack-header">
+                        <h4>Combined Attack</h4>
+                        <span class="attack-status" id="status-combined_attack">●</span>
+                    </div>
+                    <p>Kombinacja ataków: GET, POST i SYN packets</p>
+                    <div class="attack-buttons">
+                        <button class="btn btn-start" onclick="startAttack('combined_attack')">Uruchom</button>
+                        <button class="btn btn-stop" onclick="stopAttack('combined_attack')">Zatrzymaj</button>
+                    </div>
+                </div>
+
+                <div class="attack-card">
+                    <div class="attack-header">
+                        <h4>SYN Flood</h4>
+                        <span class="attack-status" id="status-syn_flood">●</span>
+                    </div>
+                    <p>Klasyczny atak SYN Flood wykorzystujący TCP handshake</p>
+                    <div class="attack-buttons">
+                        <button class="btn btn-start" onclick="startAttack('syn_flood')">Uruchom</button>
+                        <button class="btn btn-stop" onclick="stopAttack('syn_flood')">Zatrzymaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="log-panel">
+            <h2>Logi</h2>
+            <div id="log-container"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

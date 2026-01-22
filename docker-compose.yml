@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  network-security-lab:
+    build: .
+    container_name: network-security-lab
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./attacks:/app/attacks
+      - ./templates:/app/templates
+      - ./static:/app/static
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    privileged: true
+    restart: unless-stopped
+    environment:
+      - FLASK_ENV=development
